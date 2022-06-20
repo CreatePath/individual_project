@@ -1,0 +1,73 @@
+.clubName {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.nav-item {
+    margin-right: 120px;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    margin : 20px;
+    margin-top: 30px;
+    justify-content: space-between;
+}
+
+.d-flex {
+    width: 20%;
+    height: 100%;
+    margin: 20px;
+    background-color: mintcream;
+    justify-content: center;
+}
+
+.d-flex img {
+    width: 100%;
+    height: 100%;
+}
+
+.d-flex li {
+    text-align: center;
+}
+
+#postBox {
+    width: 100%;
+    background-color: #f2f4f6;
+    padding: 10px;
+}
+
+#title{
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom : 1px solid black;
+}
+
+#info {
+    border-bottom: 1px solid gray;
+}
+
+#desc {
+    margin-top : 20px;
+    margin-bottom : 30px;
+}
+
+#commentBox {
+    width: 100%;
+}
+
+textarea {
+    width: 80%;
+}
+
+#submit {
+    height: 60px;
+    margin-bottom: 40px;
+}
+
+#gotoList {
+    width: 100px;
+    margin-bottom : 20px;
+    text-align: center;
+}

@@ -1,0 +1,46 @@
+.clubName {
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.title {
+    color: blue;
+}
+
+#info {
+    text-align: center;
+    background-color: mintcream;
+    padding: 40px;
+    margin: 20px;
+}
+
+#info div {
+    margin: 10px;
+}
+
+#info a {
+    margin: 10px;
+}
+
+#myPost {
+    margin: 20px;
+    padding: 40px;
+    background-color: azure;
+}
+
+#myComment {
+    margin: 20px;
+    padding: 40px;
+    background-color: #f5f4e8;
+}
+
+.button {
+    margin: 10px;
+}

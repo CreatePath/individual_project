@@ -1,0 +1,68 @@
+.clubName {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.nav-item {
+    margin-right: 120px;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    margin : 20px;
+    margin-top: 30px;
+}
+
+#mainBox {
+    width: 100%;
+}
+
+.d-flex {
+    width: 20%;
+    height: 100%;
+    padding: 40px;
+    margin: 20px;
+    background-color: mintcream;
+    justify-content: center;
+}
+
+.d-flex img {
+    width: 100%;
+    height: 100%;
+}
+
+.d-flex li {
+    text-align: center;
+}
+
+.d-flex img {
+    width: 100%;
+    height: 100%;
+}
+
+.d-flex li {
+    text-align: center;
+}
+
+caption {
+    background-color: rgb(206, 245, 205);
+    margin-bottom: 20px;
+}
+
+.notice-list {
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: space-between;
+}
+
+table tr td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

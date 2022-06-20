@@ -1,0 +1,48 @@
+.clubName {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.nav-item {
+    margin-right: 120px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom : 40px;
+    justify-content: space-evenly;
+}
+
+main div {
+    margin-top : 30px;
+}
+
+form {
+    width: 50%;
+}
+
+#title {
+    width : 100%;
+}
+
+#desc {
+    width: 100%;
+    height: 500px;
+}
+
+#files {
+    background-color: beige;
+    padding : 20px;
+}
+
+#submit {
+    margin-top: 20px;
+}
+
+
+
+
+
