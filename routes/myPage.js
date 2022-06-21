@@ -20,7 +20,7 @@ router.get("/myPage/:userId", (req, res) => {
                 clubs = rows[0].user_club.split(",");
                 console.log(clubs);
                 for (var i=0; i<clubs.length; i++){
-                    clubList += `<li><a href="/notice/${clubs[i]}">${clubs[i]}</a><button class="btn btn-danger text-white write" onclick="outClub('${clubs[i]}')">탈퇴</button></li>`
+                    clubList += `<li class="clubLine"><a href="/notice/${clubs[i]}">${clubs[i]}</a><button class="btn btn-danger text-white write" onclick="outClub('${clubs[i]}')">탈퇴</button></li>`
                 }
             } else clubList = "<li>없습니다.</li>";
             var postQuery = `SELECT post_id, post_title, written_date, club FROM post WHERE writer="${id}"`;
@@ -29,7 +29,7 @@ router.get("/myPage/:userId", (req, res) => {
                     for (var i=0; i<rows.length; i++){
                         const post_title = rows[rows.length-i-1].post_title;
                         const post_club = rows[rows.length-i-1].club;
-                        const post_date = rows[rows.length-i-1].written_date;
+                        const post_date = rows[rows.length-i-1].written_date.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
                         const post_id = rows[rows.length-i-1].post_id;
                         postList += `
                             <tr>
@@ -49,7 +49,7 @@ router.get("/myPage/:userId", (req, res) => {
                     if (comment_rows[0]){
                         for (var i=0; i<comment_rows.length; i++){
                             var comment_desc = comment_rows[comment_rows.length-i-1].comment_desc;
-                            var comment_date = comment_rows[comment_rows.length-i-1].written_date;
+                            var comment_date = comment_rows[comment_rows.length-i-1].written_date.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
                             var post_id = comment_rows[comment_rows.length-i-1].post_num;
                             maria.query(`SELECT post_title, club FROM post WHERE post_id=${post_id}`, (err, post_rows) => {
                                 if (err) console.log(err);

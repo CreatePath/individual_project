@@ -29,6 +29,10 @@ main {
     margin: 10px;
 }
 
+.clubLine {
+    margin-bottom: 10px;
+}
+
 #myPost {
     margin: 20px;
     padding: 40px;
