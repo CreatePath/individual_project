@@ -24,20 +24,20 @@ router.post("/register-process", (req, res) => {
         }
     })
 
-    // 동아리 정확한지 검사
-    inputClubs = clubs.split(",");
-    var stack = 0
-    for (var i=0; i<inputClubs.length; i++) {
-        for (category in ssuClubs.clubList) {
-            if (inputClubs[i] === ssuClubs.clubList[category]){
-                stack += 1;
-                break
-            }
-        }
-    } 
-    if (stack !== inputClubs.length) {
-        res.send(`<script>alert("동아리를 다시 입력해 주세요.);location.href="/register"</script>`)
-    }
+    // // 동아리 정확한지 검사
+    // inputClubs = clubs.split(",");
+    // var stack = 0
+    // for (var i=0; i<inputClubs.length; i++) {
+    //     for (category in ssuClubs.clubList) {
+    //         if (inputClubs[i] === ssuClubs.clubList[category]){
+    //             stack += 1;
+    //             break
+    //         }
+    //     }
+    // } 
+    // if (stack !== inputClubs.length) {
+    //     res.send(`<script>alert("동아리를 다시 입력해 주세요.);location.href="/register"</script>`)
+    // }
 
 
     // 비밀번호 암호화
