@@ -20,9 +20,9 @@ router.get("/post/:pageId/:postId", (req, res) => {
                 const title = rows[0].post_title;
                 const desc = rows[0].post_desc;
                 const writer = rows[0].writer;
-                var date = rows[0].written_date;
-                date.setHours(date.getHours() + 9);
-                dateString = date.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
+                var date = rows[0].written_date; // UTC 시간
+                date.setHours(date.getHours() + 9); // 한국 시간으로 변환
+                dateString = date.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"}); // 출력 형식 지정
                 if (rows[0].class === 0) where = "notice";
                 else where = "gallery";
                 const user_info = profile.profile(req.session.user.id, req.session.user.name);

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const maria = require('../database/connect/maria');
+const ssuClubs = require('../lib/clubList');
 
 // crypto 모듈을 이용해 비밀번호 암호화
 const crypto = require('crypto');
@@ -22,6 +23,22 @@ router.post("/register-process", (req, res) => {
             }
         }
     })
+
+    // 동아리 정확한지 검사
+    inputClubs = clubs.split(",");
+    var stack = 0
+    for (var i=0; i<inputClubs.length; i++) {
+        for (category in ssuClubs.clubList) {
+            if (inputClubs[i] === ssuClubs.clubList[category]){
+                stack += 1;
+                break
+            }
+        }
+    } 
+    if (stack !== inputClubs.length) {
+        res.send(`<script>alert("동아리를 다시 입력해 주세요.);location.href="/register"</script>`)
+    }
+
 
     // 비밀번호 암호화
     crypto.pbkdf2(pw, 'salt', 100000, 64, 'sha512', (err,  derivedKey) => {
