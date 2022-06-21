@@ -11,7 +11,6 @@ router.get("/myPage/:userId", (req, res) => {
         const id = req.session.user.id;
         const name = req.session.user.name;
         var clubList = "";
-        var postList = "";
         var clubQuery = `SELECT user_club FROM user WHERE user_id = "${id}"`
         maria.query(clubQuery, (err, rows) => {
             console.log(rows);
@@ -23,6 +22,7 @@ router.get("/myPage/:userId", (req, res) => {
                     clubList += `<li class="clubLine"><a href="/notice/${clubs[i]}">${clubs[i]}</a><button class="btn btn-danger text-white write" onclick="outClub('${clubs[i]}')">탈퇴</button></li>`
                 }
             } else clubList = "<li>없습니다.</li>";
+            var postList = "";
             var postQuery = `SELECT post_id, post_title, written_date, club FROM post WHERE writer="${id}"`;
             maria.query(postQuery, (err, rows) => {
                 if (rows[0]) {
@@ -44,32 +44,42 @@ router.get("/myPage/:userId", (req, res) => {
                         `
                     }
                 }
-                var commentList = ``;
+                // 댓글 목록 ==> 댓글 내용, 댓글 작성시간, 본문 링크(동아리, postId, 본문 제목 필요)
+                // 밤새도록 사투를 벌였으나 구현 실패..........
+                var list = ``;
+                var commentInfoList = [];
                 const commentQuery = `SELECT comment_desc, post_num, written_date FROM comment WHERE writer="${id}"`;
                 maria.query(commentQuery, (err, comment_rows) => {
                     if (err) console.log(err);
                     if (comment_rows[0]){
                         for (var i=0; i<comment_rows.length; i++){
-                            var comment_desc = comment_rows[comment_rows.length-i-1].comment_desc;
-                            var comment_time = comment_rows[comment_rows.length-i-1].written_date;
+                            var commentObj = comment_rows[comment_rows.length-i-1];
+                            var comment_time = commentObj.written_date
                             comment_time.setHours(comment_time.getHours() + 9);
-                            var comment_timeString = comment_time.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
-                            var post_id = comment_rows[comment_rows.length-i-1].post_num;
-                            maria.query(`SELECT post_title, club FROM post WHERE post_id=${post_id}`, (err, post_rows) => {
-                                if (err) console.log(err);
-                                var post_title = post_rows[0].post_title;
-                                var post_club = post_rows[0].club;
-                                commentList += `
+                            var commentTimeString = comment_time.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
+                            commentInfo = [commentObj.comment_desc, commentObj.post_num, commentTimeString];
+                            commentInfoList.push(commentInfo);
+                            console.log(commentInfoList);
+                        } for (var j=0; j<commentInfoList.length; j++) {
+                            var k = commentInfoList.length-j-1;
+                            maria.query(`SELECT post_title, club FROM post WHERE post_id=${commentInfoList[k][1]}`,
+                            (err, row) => {
+                                if (err) throw err;
+                                if (row) {
+                                    var title = row[0].post_title;
+                                    var club = row[0].club;
+                                    list += `
                                     <tr>
-                                        <td>${comment_desc}</td>
-                                        <td><a href="/post/${post_club}/${post_id}">${post_title}</a></td>
-                                        <td>${comment_timeString}</td>
+                                        <td>${commentInfoList[k][0]}</td>
+                                        <td><a href="/post/${club}/${commentInfoList[k][1]}">${title}</a></td>
+                                        <td>${commentInfoList[k][2]}</td>
                                     </tr>
                                 `
-                                res.send(templateMyPage.myPage(id, name, clubList, postList, commentList));
+                                console.log(list);
+                                }
                             })
                         }
-                    } else res.send(templateMyPage.myPage(id, name, clubList, postList, commentList));
+                    } res.send(templateMyPage.myPage(id, name, clubList, postList, list));
                 })
             })
         });

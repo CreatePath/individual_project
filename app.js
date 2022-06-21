@@ -22,6 +22,7 @@ const updatePost = require("./routes/updatePost");
 const updateDB = require("./routes/updateDB");
 const deletePost = require("./routes/deletePost");
 const outClub = require('./routes/outClub');
+const createComment = require("./routes/createComment");
 const withdrwal = require("./routes/withdrawal");
 
 const app = express();
@@ -129,7 +130,9 @@ app.get("/write/:pageId", accessWrite);
 app.post("/write/:pageId/create-process", writePost);
 
 // 동아리 글 조회 페이지. pageId는 동아리 이름, post_num은 DB에서 사용하는 primary key인 post_id.
-app.get("/post/:pageId/:post_num", viewPost);
+app.get("/post/:pageId/:postId", viewPost);
+
+app.post("/post/:pageId/:postId", createComment);
 
 // 로그아웃 요청 시
 app.get("/logout", (req, res) => {
