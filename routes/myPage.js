@@ -20,7 +20,7 @@ router.get("/myPage/:userId", (req, res) => {
                 clubs = rows[0].user_club.split(",");
                 console.log(clubs);
                 for (var i=0; i<clubs.length; i++){
-                    clubList += `<li><a href="/notice/${clubs[i]}">${clubs[i]}</a><a class="btn btn-danger" href="/out/${clubs[i]}" role="button">탈퇴</a></li>`
+                    clubList += `<li><a href="/notice/${clubs[i]}">${clubs[i]}</a><button class="btn btn-danger text-white write" onclick="outClub('${clubs[i]}')">탈퇴</button></li>`
                 }
             } else clubList = "<li>없습니다.</li>";
             var postQuery = `SELECT post_id, post_title, written_date, club FROM post WHERE writer="${id}"`;

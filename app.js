@@ -22,6 +22,7 @@ const updatePost = require("./routes/updatePost");
 const updateDB = require("./routes/updateDB");
 const deletePost = require("./routes/deletePost");
 const outClub = require('./routes/outClub');
+const withdrwal = require("./routes/withdrawal");
 
 const app = express();
 const form_data = multer();
@@ -137,8 +138,8 @@ app.get("/logout", (req, res) => {
     })
 });
 
-// // 회원 탈퇴 프로세스.
-// app.get("/withdrwal")
+// 회원 탈퇴 프로세스.
+app.get("/withdrawal", withdrwal);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
