@@ -29,13 +29,15 @@ router.get("/myPage/:userId", (req, res) => {
                     for (var i=0; i<rows.length; i++){
                         const post_title = rows[rows.length-i-1].post_title;
                         const post_club = rows[rows.length-i-1].club;
-                        const post_date = rows[rows.length-i-1].written_date.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
+                        var post_time = rows[rows.length-i-1].written_date;
+                        post_time.setHours(post_time.getHours() + 9);
+                        var post_timeString = post_time.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
                         const post_id = rows[rows.length-i-1].post_id;
                         postList += `
                             <tr>
                                 <td><a href="/post/${post_club}/${post_id}">${post_title}</a></td>
                                 <td>${post_club}</td>
-                                <td>${post_date}</td>
+                                <td>${post_timeString}</td>
                                 <td><a class="btn btn-primary" href="/update/${post_id}" role="button">수정</a></td>
                                 <td><a class="btn btn-secondary" href="/delete/${post_id}" role="button">삭제</a></td>
                             </tr>
@@ -49,7 +51,9 @@ router.get("/myPage/:userId", (req, res) => {
                     if (comment_rows[0]){
                         for (var i=0; i<comment_rows.length; i++){
                             var comment_desc = comment_rows[comment_rows.length-i-1].comment_desc;
-                            var comment_date = comment_rows[comment_rows.length-i-1].written_date.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
+                            var comment_time = comment_rows[comment_rows.length-i-1].written_date;
+                            comment_time.setHours(comment_time.getHours() + 9);
+                            var comment_timeString = comment_time.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
                             var post_id = comment_rows[comment_rows.length-i-1].post_num;
                             maria.query(`SELECT post_title, club FROM post WHERE post_id=${post_id}`, (err, post_rows) => {
                                 if (err) console.log(err);
@@ -59,7 +63,7 @@ router.get("/myPage/:userId", (req, res) => {
                                     <tr>
                                         <td>${comment_desc}</td>
                                         <td><a href="/post/${post_club}/${post_id}">${post_title}</a></td>
-                                        <td>${comment_date}</td>
+                                        <td>${comment_timeString}</td>
                                     </tr>
                                 `
                                 res.send(templateMyPage.myPage(id, name, clubList, postList, commentList));
