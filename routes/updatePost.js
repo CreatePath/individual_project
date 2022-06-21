@@ -9,7 +9,7 @@ router.get("/update/:postId", (req, res) => {
     else {
         const post_id = req.params.postId;
         maria.query(`SELECT post_title, club, post_desc FROM post WHERE post_id=${post_id}`, (err, rows) => {
-            res.send(templateUpdate.html(rows[0].club, `/update/${rows[0].club}/${post_id}/update_process`, rows[0].post_title, rows[0].post_desc));
+            res.send(templateUpdate.html(rows[0].club, `/update/${rows[0].club}/${post_id}/update-process`, rows[0].post_title, rows[0].post_desc));
         })
     }
 })

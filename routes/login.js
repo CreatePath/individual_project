@@ -4,7 +4,7 @@ const maria = require("../database/connect/maria");
 
 const router = express.Router();
 
-router.post("/login_process", (req, res) => {
+router.post("/login-process", (req, res) => {
     const id = req.body.id;
     const pw = req.body.pw;
 

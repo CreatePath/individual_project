@@ -14,8 +14,11 @@ router.get("/myPage/:userId", (req, res) => {
         var postList = "";
         var clubQuery = `SELECT user_club FROM user WHERE user_id = "${id}"`
         maria.query(clubQuery, (err, rows) => {
-            if (rows.user_club !== "") {
+            console.log(rows);
+            console.log(rows[0].user_club);
+            if (rows[0].user_club !== "") {
                 clubs = rows[0].user_club.split(",");
+                console.log(clubs);
                 for (var i=0; i<clubs.length; i++){
                     clubList += `<li><a href="/notice/${clubs[i]}">${clubs[i]}</a><a class="btn btn-danger" href="/out/${clubs[i]}" role="button">탈퇴</a></li>`
                 }

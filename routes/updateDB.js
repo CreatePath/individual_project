@@ -3,7 +3,7 @@ const maria = require("../database/connect/maria");
 
 const router = express.Router();
 
-router.post("/update/:pageId/:postId/update_process", (req, res) => {
+router.post("/update/:pageId/:postId/update-process", (req, res) => {
     if (!req.session.user) res.redirect("/login");
     else {
         const post_club = req.params.pageId;

@@ -6,7 +6,7 @@ const maria = require('../database/connect/maria');
 // crypto 모듈을 이용해 비밀번호 암호화
 const crypto = require('crypto');
 
-router.post("/register_process", (req, res) => {
+router.post("/register-process", (req, res) => {
     const id = req.body.id;
     const pw = req.body.pw;
     const name = req.body.name;

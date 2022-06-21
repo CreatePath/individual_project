@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const maria = require('../database/connect/maria');
 
-router.post('/write/:pageId/create_process', (req, res) => {
+router.post('/write/:pageId/create-process', (req, res) => {
     const filteredId = req.params.pageId; // url에서 동아리 이름 추출
     const title = req.body.post_title; // 글 제목
     const desc = req.body.post_desc; // 글 내용

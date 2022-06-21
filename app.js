@@ -20,6 +20,7 @@ const register = require('./routes/registerSubmit');
 const myPage = require("./routes/myPage.js");
 const updatePost = require("./routes/updatePost");
 const updateDB = require("./routes/updateDB");
+const deletePost = require("./routes/deletePost");
 const outClub = require('./routes/outClub');
 
 const app = express();
@@ -59,7 +60,7 @@ app.get("/login", (req, res) => {
 })
 
 // 로그인 프로세스
-app.post("/login_process", login_process);
+app.post("/login-process", login_process);
 
 // 회원가입 화면 
 app.get("/register", (req, res) => {
@@ -67,7 +68,7 @@ app.get("/register", (req, res) => {
 })
 
 // 회원가입에서 post 요청이 오면 실행.
-app.post('/register_process', register);
+app.post('/register-process', register);
 
 // 메인화면. 조회할 동아리 선택. 
 app.get("/main", (req, res) => {
@@ -105,23 +106,26 @@ app.get("/gallery/:pageId", (req, res) => {
 // 마이페이지. userId는 사용자의 아이디
 app.get("/myPage/:userId", myPage);
 
-// 동아리 탈퇴 버튼 누르면 실행
+// 동아리 탈퇴 프로세스. 동아리 탈퇴 버튼 누르면 실행
 app.get("/out/:pageId", outClub);
 
-// 동아리 입부 신청 버튼 누르면 실행
+// 동아리 입부 프로세스. 동아리 입부 신청 버튼 누르면 실행
 app.get("/join/:pageId", joinClub);
 
-// 내 글 수정 페이지. 마이페이지의 수정 버튼 누르면 실행.
+// 내가 쓴 글 수정 페이지. 마이페이지의 수정 버튼 누르면 실행.
 app.get("/update/:postId", updatePost);
 
-// 수정 프로세스
-app.post("/update/:pageId/:postId/update_process", updateDB);
+// 수정 프로세스. 수정 페이지에서 업로드 버튼 누르면 실행.
+app.post("/update/:pageId/:postId/update-process", updateDB);
+
+// 삭제 프로세스. 마이페이지의 삭제 버튼 누르면 실행.
+app.get("/delete/:postId", deletePost);
 
 // 동아리 글 쓰기 페이지. pageId는 동아리 이름.
 app.get("/write/:pageId", accessWrite); 
 
 // 동아리 글 쓰기 페이지에서 post요청이 오면 글 정보를 DB에 저장. (제목,내용,작성자,작성날짜,파일경로) 
-app.post("/write/:pageId/create_process", writePost);
+app.post("/write/:pageId/create-process", writePost);
 
 // 동아리 글 조회 페이지. pageId는 동아리 이름, post_num은 DB에서 사용하는 primary key인 post_id.
 app.get("/post/:pageId/:post_num", viewPost);
@@ -132,6 +136,9 @@ app.get("/logout", (req, res) => {
         res.send("<script>alert('로그아웃 되었습니다.');location.href='/login'</script>");
     })
 });
+
+// // 회원 탈퇴 프로세스.
+// app.get("/withdrwal")
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
