@@ -25,7 +25,7 @@ router.get("/post/:pageId/:post_num", (req, res) => {
                 if (rows[0].class === 0) where = "notice";
                 else where = "gallery";
                 const user_info = profile.profile(req.session.user.id, req.session.user.name);
-                const html = template.viewHtml(filteredId, title, writer, date, desc, where, "댓글 목록", user_info); 
+                const html = template.viewHtml(filteredId, title, writer, dateString, desc, where, "댓글 목록", user_info); 
                 res.send(html);
             }
         })
