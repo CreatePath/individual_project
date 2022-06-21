@@ -21,7 +21,7 @@ router.get("/post/:pageId/:postId", (req, res) => {
                 const desc = rows[0].post_desc;
                 const writer = rows[0].writer;
                 var date = rows[0].written_date;
-                date.getHours(date.setHours() + 9);
+                date.setHours(date.getHours() + 9);
                 dateString = date.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
                 if (rows[0].class === 0) where = "notice";
                 else where = "gallery";
