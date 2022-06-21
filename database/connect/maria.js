@@ -7,11 +7,12 @@ const conn = maria.createConnection({
     // password:'dltngus1',
     // database:'clubs',
     //dateStrings: true
+
     // heroku 사용시
     host: "us-cdbr-east-05.cleardb.net",
     user: "bc8f4f8b6e4f2f",
     password: "81241a6c",
-    database:'clubs',
+    database: "heroku_3b004a7462fcefc",
     dateStrings: true
 })
 

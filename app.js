@@ -9,7 +9,7 @@ const profile = require('./lib/templateProfile');
 const clubList = require("./lib/clubList");
 const main = require('./lib/templateMain.js');
 const postList = require('./lib/listQuery');
-const writePage = require('./lib/templateWrite');
+const accessWrite = require("./routes/accessWrite");
 
 // router
 const login_process = require("./routes/login");
@@ -18,13 +18,13 @@ const writePost = require('./routes/postData');
 const viewPost = require('./routes/viewPost');
 const register = require('./routes/registerSubmit');
 const myPage = require("./routes/myPage.js");
+const updatePost = require("./routes/updatePost");
+const updateDB = require("./routes/updateDB");
 const outClub = require('./routes/outClub');
 
 const app = express();
 const form_data = multer();
-
-//port
-var port = process.env.PORT || 3000;
+const port =   process.env.PORT || 3000;
 
 // 세션 세팅
 app.use(
@@ -111,15 +111,14 @@ app.get("/out/:pageId", outClub);
 // 동아리 입부 신청 버튼 누르면 실행
 app.get("/join/:pageId", joinClub);
 
+// 내 글 수정 페이지. 마이페이지의 수정 버튼 누르면 실행.
+app.get("/update/:postId", updatePost);
+
+// 수정 프로세스
+app.post("/update/:pageId/:postId/update_process", updateDB);
+
 // 동아리 글 쓰기 페이지. pageId는 동아리 이름.
-app.get("/write/:pageId", (req, res) => {
-    if (!req.session.user){
-        res.redirect("/login");
-    } else {
-        var filteredId = req.params.pageId;
-        res.send(writePage.html(filteredId));
-    }
-});
+app.get("/write/:pageId", accessWrite); 
 
 // 동아리 글 쓰기 페이지에서 post요청이 오면 글 정보를 DB에 저장. (제목,내용,작성자,작성날짜,파일경로) 
 app.post("/write/:pageId/create_process", writePost);
@@ -135,5 +134,5 @@ app.get("/logout", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log("server on! port=" + port);
+    console.log(`Example app listening on port ${port}`);
 });
