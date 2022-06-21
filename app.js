@@ -22,7 +22,9 @@ const outClub = require('./routes/outClub');
 
 const app = express();
 const form_data = multer();
-const port = 3000;
+
+//port
+var port = process.env.PORT || 3000;
 
 // 세션 세팅
 app.use(
@@ -133,5 +135,5 @@ app.get("/logout", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log("server on! port=" + port);
 });

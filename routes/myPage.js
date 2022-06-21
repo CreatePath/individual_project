@@ -15,16 +15,14 @@ router.get("/myPage/:userId", (req, res) => {
         var clubQuery = `SELECT user_club FROM user WHERE user_id = "${id}"`
         maria.query(clubQuery, (err, rows) => {
             if (rows.user_club !== "") {
-                console.log("1차 진입" + rows.user_club);
                 clubs = rows[0].user_club.split(",");
                 for (var i=0; i<clubs.length; i++){
                     clubList += `<li><a href="/notice/${clubs[i]}">${clubs[i]}</a><a class="btn btn-danger" href="/out/${clubs[i]}" role="button">탈퇴</a></li>`
                 }
             } else clubList = "<li>없습니다.</li>";
-            console.log(clubList)
             var postQuery = `SELECT post_id, post_title, written_date, club FROM post WHERE writer="${id}"`;
             maria.query(postQuery, (err, rows) => {
-                if (rows[0].post_title !== "") {
+                if (rows[0]) {
                     for (var i=0; i<rows.length; i++){
                         const post_title = rows[rows.length-i-1].post_title;
                         const post_club = rows[rows.length-i-1].club;
@@ -41,33 +39,30 @@ router.get("/myPage/:userId", (req, res) => {
                         `
                     }
                 }
-                console.log("2차 진입 성공")
-                console.log(postList);
                 var commentList = ``;
-                const commentQuery = `SELECT comment_desc, post_num, written_date FROM comment WHERE writer="hary0427"`;
-                const postInfoQuery = `SELECT post_title, club FROM post WHERE post_id=` 
+                const commentQuery = `SELECT comment_desc, post_num, written_date FROM comment WHERE writer="${id}"`;
                 maria.query(commentQuery, (err, comment_rows) => {
-                    for (var i=0; i<comment_rows.length; i++){
-                        console.log(comment_rows);
-                        var comment_desc = comment_rows[comment_rows.length-i-1].comment_desc;
-                        var comment_date = comment_rows[comment_rows.length-i-1].written_date;
-                        var post_id = comment_rows[comment_rows.length-i-1].post_num;
-                        maria.query(`SELECT post_title, club FROM post WHERE post_id=${post_id}`, (err, post_rows) => {
-                            if (err) console.log(err);
-                            console.log(comment_desc, comment_date, post_id)
-                            console.log(post_rows);
-                            var post_title = post_rows[0].post_title;
-                            var post_club = post_rows[0].club;
-                            commentList += `
-                                <tr>
-                                    <td>${comment_desc}</td>
-                                    <td><a href="/post/${post_club}/${post_id}">${post_title}</a></td>
-                                    <td>${comment_date}</td>
-                                </tr>
-                            `
-                            res.send(templateMyPage.myPage(id, name, clubList, postList, commentList));
-                        })
-                    }
+                    if (err) console.log(err);
+                    if (comment_rows[0]){
+                        for (var i=0; i<comment_rows.length; i++){
+                            var comment_desc = comment_rows[comment_rows.length-i-1].comment_desc;
+                            var comment_date = comment_rows[comment_rows.length-i-1].written_date;
+                            var post_id = comment_rows[comment_rows.length-i-1].post_num;
+                            maria.query(`SELECT post_title, club FROM post WHERE post_id=${post_id}`, (err, post_rows) => {
+                                if (err) console.log(err);
+                                var post_title = post_rows[0].post_title;
+                                var post_club = post_rows[0].club;
+                                commentList += `
+                                    <tr>
+                                        <td>${comment_desc}</td>
+                                        <td><a href="/post/${post_club}/${post_id}">${post_title}</a></td>
+                                        <td>${comment_date}</td>
+                                    </tr>
+                                `
+                                res.send(templateMyPage.myPage(id, name, clubList, postList, commentList));
+                            })
+                        }
+                    } else res.send(templateMyPage.myPage(id, name, clubList, postList, commentList));
                 })
             })
         });

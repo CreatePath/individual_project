@@ -9,9 +9,6 @@ router.post('/write/:pageId/create_process', (req, res) => {
     const writer = req.session.user.id; // 작성자 id
     const kind = req.body.post_kind; // 업로드할 글의 종류
 
-    console.log(writer);
-    console.log(kind);
-
     if (kind == 0) where = "notice"; // 콤보박스에서 공지사항 선택시 0으로 전달되기 때문.
     else where = "gallery"; // 갤러리 선택시 1로 전달되기 때문.
 
@@ -19,7 +16,6 @@ router.post('/write/:pageId/create_process', (req, res) => {
     maria.query(`INSERT INTO post (post_title, post_desc, writer, club, class) 
     VALUES ("${title}", "${desc}", "${writer}", "${filteredId}", ${kind})`,
     (err, rows, fields) => {
-        console.log("글 쓰기 쿼리 호출");
         res.redirect(303, `/${where}/${filteredId}`);
     });
 });

@@ -15,9 +15,7 @@ router.get("/out/:pageId", (req, res) => {
                 break
             }
         }
-        console.log(clubs);
         var clubString = clubs.join(",");
-        console.log(clubString);
         maria.query(`UPDATE user SET user_club="${clubString}" WHERE user_id="${id}"`, 
         (err, rows) => {
             res.send(`<script>alert('${clubName}을 탈퇴하셨습니다.');location.href='/mypage/${id}';</script>`)

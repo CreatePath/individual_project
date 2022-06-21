@@ -10,7 +10,6 @@ router.get("/join/:pageId", (req, res) => {
         const id = req.session.user.id;
         maria.query(`SELECT user_club FROM user WHERE user_id="${id}"`, (err, rows) => {
             let clubs = rows[0].user_club.split(",");
-            console.log(clubs);
             for (var i=0; i<clubs.length; i++) {
                 if (clubs[i] === clubName) return res.send(`<script>alert('이미 가입하셨습니다.');location.href='/notice/${clubName}'</script>`);
             }
