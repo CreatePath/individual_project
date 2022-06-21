@@ -1,12 +1,14 @@
 const maria = require('mysql');
 
-const conn = maria.createConnection({
-    //localhost 사용시
+const dbconfig = {
+    connectionLimit: 20,
+
+    // localhost 사용시
     // host:'localhost',
     // user:'root',
     // password:'dltngus1',
     // database:'clubs',
-    //dateStrings: true
+    // dateStrings: true
 
     // heroku 사용시
     host: "us-cdbr-east-05.cleardb.net",
@@ -14,6 +16,8 @@ const conn = maria.createConnection({
     password: "81241a6c",
     database: "heroku_3b004a7462fcefc",
     dateStrings: true
-})
+}
+
+var conn = maria.createPool(dbconfig);
 
 module.exports = conn;
