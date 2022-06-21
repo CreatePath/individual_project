@@ -41,7 +41,7 @@ router.get("/post/:pageId/:postId", (req, res) => {
                             list += tempCommentList.commnetList(comment_writer, commentTimeString, comment);
                         }
                     }
-                    const html = template.viewHtml(filteredId, title, writer, date, desc, where, list, user_info); 
+                    const html = template.viewHtml(filteredId, title, writer, dateString, desc, where, list, user_info); 
                     res.send(html);
                 })
             }
