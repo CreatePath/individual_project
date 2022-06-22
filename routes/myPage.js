@@ -39,7 +39,7 @@ router.get("/myPage/:userId", (req, res) => {
                                 <td>${post_club}</td>
                                 <td>${post_timeString}</td>
                                 <td><a class="btn btn-primary" href="/update/${post_id}" role="button">수정</a></td>
-                                <td><a class="btn btn-secondary" href="/delete/${post_id}" role="button">삭제</a></td>
+                                <td><button class="btn btn-secondary" onclick="askDelete('${post_id}')" >삭제</button></td>
                             </tr>
                         `
                     }
@@ -47,40 +47,40 @@ router.get("/myPage/:userId", (req, res) => {
                 // 댓글 목록 ==> 댓글 내용, 댓글 작성시간, 본문 링크(동아리, postId, 본문 제목 필요)
                 // 밤새도록 사투를 벌였으나 구현 실패..........
                 var list = ``;
-                var commentInfoList = [];
-                const commentQuery = `SELECT comment_desc, post_num, written_date FROM comment WHERE writer="${id}"`;
-                maria.query(commentQuery, (err, comment_rows) => {
-                    if (err) console.log(err);
-                    if (comment_rows[0]){
-                        for (var i=0; i<comment_rows.length; i++){
-                            var commentObj = comment_rows[comment_rows.length-i-1];
-                            var comment_time = commentObj.written_date
-                            comment_time.setHours(comment_time.getHours() + 9);
-                            var commentTimeString = comment_time.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
-                            commentInfo = [commentObj.comment_desc, commentObj.post_num, commentTimeString];
-                            commentInfoList.push(commentInfo);
-                            console.log(commentInfoList);
-                        } for (var j=0; j<commentInfoList.length; j++) {
-                            var k = commentInfoList.length-j-1;
-                            maria.query(`SELECT post_title, club FROM post WHERE post_id=${commentInfoList[k][1]}`,
-                            (err, row) => {
-                                if (err) throw err;
-                                if (row) {
-                                    var title = row[0].post_title;
-                                    var club = row[0].club;
-                                    list += `
-                                    <tr>
-                                        <td>${commentInfoList[k][0]}</td>
-                                        <td><a href="/post/${club}/${commentInfoList[k][1]}">${title}</a></td>
-                                        <td>${commentInfoList[k][2]}</td>
-                                    </tr>
-                                `
-                                console.log(list);
-                                }
-                            })
-                        }
-                    } res.send(templateMyPage.myPage(id, name, clubList, postList, list));
-                })
+                res.send(templateMyPage.myPage(id, name, clubList, postList, list));
+                // var commentInfoList = [];
+                // const commentQuery = `SELECT comment_desc, post_num, written_date FROM comment WHERE writer="${id}"`;
+                // maria.query(commentQuery, (err, comment_rows) => {
+                //     if (err) console.log(err);
+                //     if (comment_rows[0]){
+                //         for (var i=0; i<comment_rows.length; i++){
+                //             var commentObj = comment_rows[comment_rows.length-i-1];
+                //             var comment_time = commentObj.written_date
+                //             comment_time.setHours(comment_time.getHours() + 9);
+                //             var commentTimeString = comment_time.toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
+                //             commentInfo = [commentObj.comment_desc, commentObj.post_num, commentTimeString];
+                //             commentInfoList.push(commentInfo);
+                //             console.log(commentInfoList);
+                //         } for (var j=0; j<commentInfoList.length; j++) {
+                //             var k = commentInfoList.length-j-1;
+                //             maria.query(`SELECT post_title, club FROM post WHERE post_id=${commentInfoList[k][1]}`,
+                //             (err, row) => {
+                //                 if (err) throw err;
+                //                 if (row) {
+                //                     var title = row[0].post_title;
+                //                     var club = row[0].club;
+                //                     list += `
+                //                     <tr>
+                //                         <td>${commentInfoList[k][0]}</td>
+                //                         <td><a href="/post/${club}/${commentInfoList[k][1]}">${title}</a></td>
+                //                         <td>${commentInfoList[k][2]}</td>
+                //                     </tr>
+                //                 `
+                //                 console.log(list);
+                //                 }
+                //             })
+                //         }
+                //    } 
             })
         });
     }

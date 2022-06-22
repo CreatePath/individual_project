@@ -21,24 +21,8 @@ router.post("/register-process", (req, res) => {
             if (rows.length) {
                 return res.send("<script>alert('입력하신 아이디는 이미 사용중입니다.');location.href = '/register';</script>");
             }
-        }
+        } 
     })
-
-    // // 동아리 정확한지 검사
-    // inputClubs = clubs.split(",");
-    // var stack = 0
-    // for (var i=0; i<inputClubs.length; i++) {
-    //     for (category in ssuClubs.clubList) {
-    //         if (inputClubs[i] === ssuClubs.clubList[category]){
-    //             stack += 1;
-    //             break
-    //         }
-    //     }
-    // } 
-    // if (stack !== inputClubs.length) {
-    //     res.send(`<script>alert("동아리를 다시 입력해 주세요.);location.href="/register"</script>`)
-    // }
-
 
     // 비밀번호 암호화
     crypto.pbkdf2(pw, 'salt', 100000, 64, 'sha512', (err,  derivedKey) => {

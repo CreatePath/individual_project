@@ -32,7 +32,7 @@ router.post("/login-process", (req, res) => {
                     authorized: true
                 };
                 req.session.save(() => {
-                    res.send("<script>alert('로그인에 성공하였습니다.');location.href='/';</script>");
+                    res.redirect("/");
                 })
             } else {
                 res.send("<script>alert('로그인에 실패하였습니다. 다시 입력해주세요.');location.href='/login';</script>");
