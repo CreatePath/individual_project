@@ -10,9 +10,9 @@ main {
     margin-top: 20px;
 }
 
-.title {
+/* .title {
     color: #bbded6;
-}
+} */
 
 #info {
     text-align: center;
@@ -36,13 +36,13 @@ main {
 #myPost {
     margin: 20px;
     padding: 40px;
-    background-color: azure;
+    /* background-color: azure; */
 }
 
 #myComment {
     margin: 20px;
     padding: 40px;
-    background-color: #f5f4e8;
+    /* background-color: #f5f4e8; */
 }
 
 .button {
