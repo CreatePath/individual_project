@@ -13,15 +13,14 @@ router.get("/myPage/:userId", (req, res) => {
         var clubList = "";
         var clubQuery = `SELECT user_club FROM user WHERE user_id = "${id}"`
         maria.query(clubQuery, (err, rows) => {
-            console.log(rows);
-            console.log(rows[0].user_club);
             if (rows[0].user_club !== "") {
                 clubs = rows[0].user_club.split(",");
-                console.log(clubs);
                 for (var i=0; i<clubs.length; i++){
                     clubList += `<li class="clubLine"><a href="/notice/${clubs[i]}">${clubs[i]}</a><button class="btn btn-danger text-white write" onclick="outClub('${clubs[i]}')">탈퇴</button></li>`
                 }
             } else clubList = "<li>없습니다.</li>";
+
+            // DB에서 회원이 쓴 글 가져오기
             var postList = "";
             var postQuery = `SELECT post_id, post_title, written_date, club FROM post WHERE writer="${id}"`;
             maria.query(postQuery, (err, rows) => {
@@ -44,7 +43,7 @@ router.get("/myPage/:userId", (req, res) => {
                         `
                     }
                 }
-                // 댓글 목록 ==> 댓글 내용, 댓글 작성시간, 본문 링크(동아리, postId, 본문 제목 필요)
+                // 댓글 목록 ==> 댓글 내용, 댓글 작성시간, 본문 정보 및 링크(동아리, postId, 본문 제목 필요)
                 // 밤새도록 사투를 벌였으나 구현 실패..........
                 var list = ``;
                 res.send(templateMyPage.myPage(id, name, clubList, postList, list));
