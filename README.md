@@ -5,8 +5,10 @@
 모든 동아리의 게시판 구현.   
 ## 웹사이트 접속   
 ***
-<a href="https://ssu-clubs.herokuapp.com/login">여기로 접속</a>   
-<br>
+회원가입 또는 아래 테스트 아이디로 로그인.   
+id: testid   
+pw: 12345678   
+<a href="https://ssu-clubs.herokuapp.com/login">여기로 접속</a><br>
 ## 기능 요약
 ***
 게시글 CRUD, 회원 CRUD, 댓글CR__
