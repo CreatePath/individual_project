@@ -1,4 +1,5 @@
 const maria = require('mysql');
+require('dotenv').config('.env');
 
 const dbconfig = {
     connectionLimit: 20,
@@ -10,10 +11,10 @@ const dbconfig = {
     // database:'clubs'
 
     // heroku 사용시
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "bc8f4f8b6e4f2f",
-    password: "81241a6c",
-    database: "heroku_3b004a7462fcefc"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PW,
+    database: process.env.DB_NAME
 }
 
 var conn = maria.createPool(dbconfig);

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
 // template
 const profile = require('./lib/templateProfile');
@@ -27,14 +28,14 @@ const withdrwal = require("./routes/withdrawal");
 
 const app = express();
 const form_data = multer();
-const port =   process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // 세션 세팅
 app.use(
     session({
-        secret: "my key",
-        resave: false,
-        saveUninitialized: true
+        secret: process.env.SESSION_SECRET,
+        resave: process.env.SESSION_RESAVE,
+        saveUninitialized: process.env.SESSION_saveUninitialized
     })
 );
 
